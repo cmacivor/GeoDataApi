@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeoData.GeoDataApiModel
+namespace GeoData.AddressCandidates
 {
-    public class Location
+    public class Attributes
     {
-        public double x { get; set; }
-        public double y { get; set; }
     }
 }

@@ -42,12 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="GeoDataApiModel\Attributes.cs" />
-    <Compile Include="GeoDataApiModel\Candidate.cs" />
-    <Compile Include="GeoDataApiModel\Extent.cs" />
-    <Compile Include="GeoDataApiModel\Location.cs" />
-    <Compile Include="GeoDataApiModel\RootObject.cs" />
-    <Compile Include="GeoDataApiModel\SpatialReference.cs" />
+    <Compile Include="AddressCandidatesApiModel\Attributes.cs" />
+    <Compile Include="AddressCandidatesApiModel\Candidate.cs" />
+    <Compile Include="AddressCandidatesApiModel\Extent.cs" />
+    <Compile Include="AddressCandidatesApiModel\Location.cs" />
+    <Compile Include="AddressCandidatesApiModel\RootObject.cs" />
+    <Compile Include="AddressCandidatesApiModel\SpatialReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
