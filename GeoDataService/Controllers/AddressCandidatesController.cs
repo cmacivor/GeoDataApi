@@ -37,6 +37,8 @@ namespace GeoDataService.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
+
+                var serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<GeoData.GeoDataApiModel.RootObject>(result);
             }
 
             return null;
