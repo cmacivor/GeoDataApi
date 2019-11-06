@@ -48,6 +48,9 @@
     <Compile Include="AddressCandidatesApiModel\Location.cs" />
     <Compile Include="AddressCandidatesApiModel\RootObject.cs" />
     <Compile Include="AddressCandidatesApiModel\SpatialReference.cs" />
+    <Compile Include="LocationSummaryApiModel\Attributes.cs" />
+    <Compile Include="LocationSummaryApiModel\LocationSummary.cs" />
+    <Compile Include="LocationSummaryApiModel\Result.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
