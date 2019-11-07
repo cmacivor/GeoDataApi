@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeoData.Services;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -17,31 +18,21 @@ namespace GeoDataService.Controllers
 
         public AddressCandidatesController()
         {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://gisdev.richmondgov.com/arcgis/rest/services/Geocode/RichmondAddress/GeocodeServer/findAddressCandidates");
+            //_httpClient = new HttpClient();
+            //_httpClient.BaseAddress = new Uri("https://gisdev.richmondgov.com/arcgis/rest/services/Geocode/RichmondAddress/GeocodeServer/findAddressCandidates");
         }
 
 
         public async Task<IHttpActionResult> Get(string street)
         {          
             string encodedAddress = System.Web.HttpUtility.UrlEncode(street);
-        
-            string url = string.Format(ConfigurationManager.AppSettings["AddressCandidatesApiUrl"], encodedAddress);
+            
+            var service = new AddressCandidatesService();
+            service.AddressCandidatesApiUrl = ConfigurationManager.AppSettings["AddressCandidatesApiUrl"];
+            var results = await service.GetAsync(encodedAddress);
 
-            var request = new HttpRequestMessage(HttpMethod.Get, url);
-
-            var response = await _httpClient.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadAsStringAsync();
-
-                var serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<GeoData.AddressCandidates.RootObject>(result);
-
-                return Ok(serialized);
-            }
-
-            return null;
+            return Ok(results);
+            //return null;
         }
     }
 }
