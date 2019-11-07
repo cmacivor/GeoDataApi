@@ -51,6 +51,12 @@
     <Compile Include="LocationSummaryApiModel\Attributes.cs" />
     <Compile Include="LocationSummaryApiModel\LocationSummary.cs" />
     <Compile Include="LocationSummaryApiModel\Result.cs" />
+    <Compile Include="LocationSummaryApiModel\ReturnResult.cs" />
+    <Compile Include="Mailable\Attributes.cs" />
+    <Compile Include="Mailable\Feature.cs" />
+    <Compile Include="Mailable\Field.cs" />
+    <Compile Include="Mailable\FieldAliases.cs" />
+    <Compile Include="Mailable\RootObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

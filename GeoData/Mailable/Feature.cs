@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeoData.MapServerApiModel
+namespace GeoData.Mailable
 {
-    public class LocationSummary
+    public class Feature
     {
-        public List<Result> results { get; set; }
+        public Attributes attributes { get; set; }
     }
 }
