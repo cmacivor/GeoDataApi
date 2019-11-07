@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,19 +23,10 @@ namespace GeoDataService.Controllers
 
 
         public async Task<IHttpActionResult> Get(string street)
-        {
-            //var arguments = new Dictionary<string, string>();
-            //arguments.Add("Street", street);
-            //arguments.Add("Out Fields", "*");
-            //arguments.Add("f", "pjson"); //tells the GIS service to return JSON instead of HTML
-
-            //var request = new HttpRequestMessage(HttpMethod.Post, _httpClient.BaseAddress)
-            //{
-            //    Content = new FormUrlEncodedContent(arguments)
-            //};
+        {          
             string encodedAddress = System.Web.HttpUtility.UrlEncode(street);
-
-            string url = $"https://gisdev.richmondgov.com/arcgis/rest/services/Geocode/RichmondAddress/GeocodeServer/findAddressCandidates?Street=&ZIP=&Single+Line+Input={encodedAddress}&category=&outFields=*&maxLocations=&outSR=&searchExtent=&location=&distance=&magicKey=&f=pjson";
+        
+            string url = string.Format(ConfigurationManager.AppSettings["AddressCandidatesApiUrl"], encodedAddress);
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
 
