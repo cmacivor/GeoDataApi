@@ -8,7 +8,8 @@ using GeoData.AddressCandidates;
 
 namespace GeoData.Services
 {
-    public class AddressCandidatesService
+    //TODO: rename this to "AddressCandidatesServiceClient"
+    public class AddressCandidatesServiceClient
     {
         private static HttpClient _httpClient;
 
@@ -16,7 +17,7 @@ namespace GeoData.Services
 
         public string AddressCandidatesApiUrl { get; set; }
 
-        public AddressCandidatesService()
+        public AddressCandidatesServiceClient()
         {
             _httpClient = new HttpClient();
         }

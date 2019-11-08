@@ -27,12 +27,11 @@ namespace GeoDataService.Controllers
         {          
             string encodedAddress = System.Web.HttpUtility.UrlEncode(street);
             
-            var service = new AddressCandidatesService();
+            var service = new AddressCandidatesServiceClient();
             service.AddressCandidatesApiUrl = ConfigurationManager.AppSettings["AddressCandidatesApiUrl"];
             var results = await service.GetAsync(encodedAddress);
 
-            return Ok(results);
-            //return null;
+            return Ok(results);            
         }
     }
 }
