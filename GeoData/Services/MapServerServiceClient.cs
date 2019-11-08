@@ -125,6 +125,8 @@ namespace GeoData.Services
             returnResult.UnitValue = mapServerAddresses.features.FirstOrDefault().attributes.UnitValue;
 
             returnResult.ZipCode = mapServerAddresses.features.FirstOrDefault().attributes.ZipCode;
+
+            returnResult.AddressId = mapServerAddresses.features.FirstOrDefault().attributes.AddressId;
         }
 
         private  MapServerReturnResult MapVoterInformationToReturnResult(MapServerApiModel.PacelLayers serializedParcelLayers)

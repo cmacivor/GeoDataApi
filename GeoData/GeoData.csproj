@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="AddressCandidatesApiModel\Attributes.cs" />
     <Compile Include="AddressCandidatesApiModel\Candidate.cs" />
     <Compile Include="AddressCandidatesApiModel\Extent.cs" />

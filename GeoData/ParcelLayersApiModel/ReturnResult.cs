@@ -33,6 +33,8 @@ namespace GeoData.LocationSummaryApiModel
 
         public string ZipCode { get; set; }
 
+        public string AddressId { get; set; }
+
         public HttpStatusCode HttpResponseStatusCode { get; set; }
 
         public string ErrorMessage { get; set; }
