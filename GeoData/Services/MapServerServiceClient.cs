@@ -18,6 +18,13 @@ namespace GeoData.Services
 
         public string CommonBoundariesApiUrlParameters { get; set; }
 
+        private readonly string CouncilDistricts = "Council Districts";
+        private readonly string FederalCongressionalDistricts = "Federal Congressional Districts";
+        private readonly string StateSenateDistricts = "State Senate Districts";
+        private readonly string StateHouseDistricts = "State House Districts";
+        private readonly string VoterPrecincts = "Voter Precincts";
+
+
         public MapServerServiceClient(string commonBoundariesApiUrl)
         {
             _httpClient = new HttpClient();
@@ -27,51 +34,85 @@ namespace GeoData.Services
 
         public async Task<MapServerReturnResult> Get(double x, double y, string streetAddress)
         {
-            //this is the URL as it's currently in Election Admin            
-            string parameters = string.Format(CommonBoundariesApiUrlParameters, x, y);
+            var commonBoundariesApiResponse = await GetCommonBoundariesApiResponse(x, y);
 
-            var request = new HttpRequestMessage(HttpMethod.Get, _httpClient.BaseAddress + parameters);
-
-            var response = await _httpClient.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
+            if (!commonBoundariesApiResponse.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadAsStringAsync();
-
-                var serializedParcelLayers = Newtonsoft.Json.JsonConvert.DeserializeObject<GeoData.MapServerApiModel.LocationSummary>(result);
-
-                if (serializedParcelLayers == null)
+                //TODO: add status code and message to returnResult
+           
+                return new MapServerReturnResult
                 {
-                    //do some friendly error handling and logging here
-                    return new MapServerReturnResult();
-                }
-
-                //map the result to ReturnResult class for council district, etc
-                var returnResult = MapVoterInformationToReturnResult(serializedParcelLayers);
-
-                string formattedAddress = string.Format("\'{0}\'", streetAddress);
-
-                string mailableUrl = string.Format(MapServerApiUrl, formattedAddress);
-
-                var mapServerRequest = new HttpRequestMessage(HttpMethod.Get, mailableUrl);
-
-                var mapServerResponse = await _addressesHttpClient.SendAsync(mapServerRequest);
-
-                var serializedMapServerResponse = await mapServerResponse.Content.ReadAsStringAsync();
-
-                var mapServerAddresses = Newtonsoft.Json.JsonConvert.DeserializeObject<GeoData.MapServer.MapServerAddresses>(serializedMapServerResponse);
-
-                //TODO check for null here
-
-                MapAddressInformationToReturnResult(returnResult, mapServerAddresses);
-
-                return returnResult;
+                    HttpResponseStatusCode = commonBoundariesApiResponse.StatusCode,
+                    ErrorMessage = "Unable to retrieve data from the Common Boundaries API."
+                };
             }
 
-            return null;
+            var result = await commonBoundariesApiResponse.Content.ReadAsStringAsync();
+
+            var serializedParcelLayers = Newtonsoft.Json.JsonConvert.DeserializeObject<GeoData.MapServerApiModel.PacelLayers>(result);
+            
+            //map the result to ReturnResult class for council district, etc
+            var returnResult = MapVoterInformationToReturnResult(serializedParcelLayers);
+
+            var mapServerResponse = await GetMapServerApiResponse(streetAddress);
+
+            if (!mapServerResponse.IsSuccessStatusCode)
+            {
+                return new MapServerReturnResult
+                {
+                    HttpResponseStatusCode = mapServerResponse.StatusCode,
+                    ErrorMessage = "Unable to retrieve data from the map server API."
+                };
+            }
+
+            var serializedMapServerResponse = await mapServerResponse.Content.ReadAsStringAsync();
+
+            var mapServerAddresses = Newtonsoft.Json.JsonConvert.DeserializeObject<GeoData.MapServer.MapServerAddresses>(serializedMapServerResponse);        
+
+            MapAddressInformationToReturnResult(returnResult, mapServerAddresses);
+
+            returnResult.HttpResponseStatusCode = System.Net.HttpStatusCode.OK;
+
+            return returnResult;
         }
 
-        private static void MapAddressInformationToReturnResult(MapServerReturnResult returnResult, MapServer.MapServerAddresses mapServerAddresses)
+        /// <summary>
+        /// this is the second API call. It's for returning Address information like street direction, the Mailable attribute, etc.
+        /// </summary>
+        /// <param name="streetAddress"></param>
+        /// <returns></returns>
+        private async Task<HttpResponseMessage> GetMapServerApiResponse(string streetAddress)
+        {
+            string formattedAddress = string.Format("\'{0}\'", streetAddress);
+
+            string mailableUrl = string.Format(MapServerApiUrl, formattedAddress);
+
+            var mapServerRequest = new HttpRequestMessage(HttpMethod.Get, mailableUrl);
+
+            var mapServerResponse = await _addressesHttpClient.SendAsync(mapServerRequest);
+
+            //var serializedMapServerResponse = await mapServerResponse.Content.ReadAsStringAsync();
+            //return serializedMapServerResponse;
+            return mapServerResponse;
+        }
+
+        /// <summary>
+        /// this API call is for retrieving Voter information- Council District, State Senate District, et.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        private async Task<HttpResponseMessage> GetCommonBoundariesApiResponse(double x, double y)
+        {
+            string parameters = string.Format(CommonBoundariesApiUrlParameters, x, y);
+
+            var commonBoundariesApiRequest = new HttpRequestMessage(HttpMethod.Get, _httpClient.BaseAddress + parameters);
+
+            var commonBoundariesApiResponse = await _httpClient.SendAsync(commonBoundariesApiRequest);
+            return commonBoundariesApiResponse;
+        }
+
+        private  void MapAddressInformationToReturnResult(MapServerReturnResult returnResult, MapServer.MapServerAddresses mapServerAddresses)
         {
             returnResult.Mailable = mapServerAddresses.features.FirstOrDefault().attributes.Mailable;
 
@@ -88,28 +129,19 @@ namespace GeoData.Services
             returnResult.ZipCode = mapServerAddresses.features.FirstOrDefault().attributes.ZipCode;
         }
 
-        private static MapServerReturnResult MapVoterInformationToReturnResult(MapServerApiModel.LocationSummary serializedParcelLayers)
+        private  MapServerReturnResult MapVoterInformationToReturnResult(MapServerApiModel.PacelLayers serializedParcelLayers)
         {
             return new MapServerReturnResult
             {
-                CouncilDistrict = serializedParcelLayers.results.FirstOrDefault(council => council.layerName == "Council Districts").attributes.Name,
-                CongressionalDistrict = serializedParcelLayers.results.FirstOrDefault(council => council.layerName == "Federal Congressional Districts").attributes.Name,
-                HouseDistrict = serializedParcelLayers.results.FirstOrDefault(district => district.layerName == "State House Districts").attributes.Name,
-                SenateDistrict = serializedParcelLayers.results.FirstOrDefault(senate => senate.layerName == "State Senate Districts").attributes.Name,
-                VoterPrecinctNumber = serializedParcelLayers.results.FirstOrDefault(precinct => precinct.layerName == "Voter Precincts").attributes.Name,
+                CouncilDistrict = serializedParcelLayers.results.FirstOrDefault(council => council.layerName == CouncilDistricts).attributes.Name,
+                CongressionalDistrict = serializedParcelLayers.results.FirstOrDefault(council => council.layerName == FederalCongressionalDistricts).attributes.Name,
+                HouseDistrict = serializedParcelLayers.results.FirstOrDefault(district => district.layerName == StateHouseDistricts).attributes.Name,
+                SenateDistrict = serializedParcelLayers.results.FirstOrDefault(senate => senate.layerName == StateSenateDistricts).attributes.Name,
+                VoterPrecinctNumber = serializedParcelLayers.results.FirstOrDefault(precinct => precinct.layerName == VoterPrecincts).attributes.Name,
 
             };
         }
 
-        //public static string SurroundWithSingleQuotes(this string text)
-        //{
-        //    return SurroundWith(text, "\'");
-        //}
-
-        //public static string SurroundWith(this string text, string ends)
-        //{
-        //    return ends + text + ends;
-        //}
 
     }
 }

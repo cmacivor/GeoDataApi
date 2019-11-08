@@ -31,16 +31,30 @@ namespace GeoDataService.Controllers
         public async Task<IHttpActionResult> Get(double x, double y, string streetAddress)
         {
             //TODO: check to ensure x and y are valid values
+            if (string.IsNullOrEmpty(streetAddress))
+            {
+                return BadRequest();
+            }
 
             var mapServerClient = new MapServerServiceClient(ConfigurationManager.AppSettings["CommonBoundariesApiUrl"]);
+
             mapServerClient.MapServerApiUrl = ConfigurationManager.AppSettings["MapServerApiUrl"];
+
             mapServerClient.CommonBoundariesApiUrlParameters = ConfigurationManager.AppSettings["CommonBoundariesApiParameters"];
 
             var result = await mapServerClient.Get(x, y, streetAddress);
 
-            return Ok(result);
+            if (result == null)
+            {
+                return NotFound();
+            }
 
-        
+            if (result.HttpResponseStatusCode != HttpStatusCode.OK)
+            {
+                throw new HttpResponseException(result.HttpResponseStatusCode);
+            }
+
+            return Ok(result);
         }
     }
 }

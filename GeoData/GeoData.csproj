@@ -49,12 +49,12 @@
     <Compile Include="AddressCandidatesApiModel\Candidate.cs" />
     <Compile Include="AddressCandidatesApiModel\Extent.cs" />
     <Compile Include="AddressCandidatesApiModel\Location.cs" />
-    <Compile Include="AddressCandidatesApiModel\RootObject.cs" />
+    <Compile Include="AddressCandidatesApiModel\AddressCandidatesReturnResult.cs" />
     <Compile Include="AddressCandidatesApiModel\SpatialReference.cs" />
-    <Compile Include="LocationSummaryApiModel\Attributes.cs" />
-    <Compile Include="LocationSummaryApiModel\LocationSummary.cs" />
-    <Compile Include="LocationSummaryApiModel\Result.cs" />
-    <Compile Include="LocationSummaryApiModel\ReturnResult.cs" />
+    <Compile Include="ParcelLayersApiModel\Attributes.cs" />
+    <Compile Include="ParcelLayersApiModel\ParcelLayersReturnResult.cs" />
+    <Compile Include="ParcelLayersApiModel\Result.cs" />
+    <Compile Include="ParcelLayersApiModel\ReturnResult.cs" />
     <Compile Include="MapServerAddresses\Attributes.cs" />
     <Compile Include="MapServerAddresses\Feature.cs" />
     <Compile Include="MapServerAddresses\Field.cs" />

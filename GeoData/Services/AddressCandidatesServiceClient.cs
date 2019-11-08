@@ -19,7 +19,7 @@ namespace GeoData.Services
             _httpClient = new HttpClient();
         }
 
-        public async Task<AddressCandidates.RootObject> GetAsync(string encodedStreet)
+        public async Task<AddressCandidatesReturnResult> GetAsync(string encodedStreet)
         {
             string url = string.Format(AddressCandidatesApiUrl, encodedStreet);
 
@@ -31,9 +31,17 @@ namespace GeoData.Services
             {
                 var result = await response.Content.ReadAsStringAsync();
 
-                var serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<GeoData.AddressCandidates.RootObject>(result);
+                var serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<AddressCandidatesReturnResult>(result);
 
-                return serialized;
+                serialized.HttpResponseStatusCode = response.StatusCode;
+                if (serialized != null)
+                {
+                    return serialized;
+                }
+            }
+            else
+            {
+                return new AddressCandidatesReturnResult { HttpResponseStatusCode = response.StatusCode };
             }
 
             return null;

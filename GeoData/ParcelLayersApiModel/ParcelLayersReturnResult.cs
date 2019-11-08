@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeoData.MapServerApiModel
 {
-    public class LocationSummary
+    public class PacelLayers
     {
         public List<Result> results { get; set; }
     }

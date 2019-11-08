@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +32,10 @@ namespace GeoData.LocationSummaryApiModel
         public string UnitValue { get; set; }
 
         public string ZipCode { get; set; }
+
+        public HttpStatusCode HttpResponseStatusCode { get; set; }
+
+        public string ErrorMessage { get; set; }
 
     }
 }

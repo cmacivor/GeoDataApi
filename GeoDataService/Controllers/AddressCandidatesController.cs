@@ -13,24 +13,32 @@ namespace GeoDataService.Controllers
   
     public class AddressCandidatesController : ApiController
     {
-        //make this static, according to this article: https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
-        private static HttpClient _httpClient;
-
-        public AddressCandidatesController()
-        {
-            //_httpClient = new HttpClient();
-            //_httpClient.BaseAddress = new Uri("https://gisdev.richmondgov.com/arcgis/rest/services/Geocode/RichmondAddress/GeocodeServer/findAddressCandidates");
-        }
-
-
         public async Task<IHttpActionResult> Get(string street)
-        {          
+        {      
+            if (string.IsNullOrEmpty(street))
+            {
+                return BadRequest();
+            }
+
             string encodedAddress = System.Web.HttpUtility.UrlEncode(street);
             
             var service = new AddressCandidatesServiceClient();
+
             service.AddressCandidatesApiUrl = ConfigurationManager.AppSettings["AddressCandidatesApiUrl"];
+
             var results = await service.GetAsync(encodedAddress);
 
+            if (results == null)
+            {
+                //TODO: log the address that causes this
+                return NotFound();
+            }
+
+            if (results.HttpResponseStatusCode != HttpStatusCode.OK)
+            {
+                throw new HttpResponseException(results.HttpResponseStatusCode);
+            }
+        
             return Ok(results);            
         }
     }
