@@ -55,11 +55,11 @@
     <Compile Include="LocationSummaryApiModel\LocationSummary.cs" />
     <Compile Include="LocationSummaryApiModel\Result.cs" />
     <Compile Include="LocationSummaryApiModel\ReturnResult.cs" />
-    <Compile Include="Mailable\Attributes.cs" />
-    <Compile Include="Mailable\Feature.cs" />
-    <Compile Include="Mailable\Field.cs" />
-    <Compile Include="Mailable\FieldAliases.cs" />
-    <Compile Include="Mailable\RootObject.cs" />
+    <Compile Include="MapServerAddresses\Attributes.cs" />
+    <Compile Include="MapServerAddresses\Feature.cs" />
+    <Compile Include="MapServerAddresses\Field.cs" />
+    <Compile Include="MapServerAddresses\FieldAliases.cs" />
+    <Compile Include="MapServerAddresses\MapServerAddresses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AddressCandidatesServiceClient.cs" />
     <Compile Include="Services\MapServerServiceClient.cs" />

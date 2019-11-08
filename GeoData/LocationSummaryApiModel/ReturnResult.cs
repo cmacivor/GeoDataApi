@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeoData.LocationSummaryApiModel
 {
-    public class ReturnResult
+    public class MapServerReturnResult
     {
         public string CouncilDistrict { get; set; }
 
