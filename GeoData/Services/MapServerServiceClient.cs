@@ -37,9 +37,7 @@ namespace GeoData.Services
             var commonBoundariesApiResponse = await GetCommonBoundariesApiResponse(x, y);
 
             if (!commonBoundariesApiResponse.IsSuccessStatusCode)
-            {
-                //TODO: add status code and message to returnResult
-           
+            {           
                 return new MapServerReturnResult
                 {
                     HttpResponseStatusCode = commonBoundariesApiResponse.StatusCode,

@@ -51,7 +51,9 @@ namespace GeoDataService.Controllers
 
             if (result.HttpResponseStatusCode != HttpStatusCode.OK)
             {
-                throw new HttpResponseException(result.HttpResponseStatusCode);
+                var responseMessage = Request.CreateResponse(result.HttpResponseStatusCode);
+                responseMessage.Content = new StringContent(result.ErrorMessage);
+                throw new HttpResponseException(responseMessage);
             }
 
             return Ok(result);
