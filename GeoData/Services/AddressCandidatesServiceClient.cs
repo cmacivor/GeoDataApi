@@ -8,12 +8,9 @@ using GeoData.AddressCandidates;
 
 namespace GeoData.Services
 {
-    //TODO: rename this to "AddressCandidatesServiceClient"
     public class AddressCandidatesServiceClient
     {
         private static HttpClient _httpClient;
-
-        //public string EncodedAddress { get; set; }
 
         public string AddressCandidatesApiUrl { get; set; }
 

@@ -28,13 +28,18 @@ namespace GeoDataService.Controllers
         }
 
 
-        public async Task<IHttpActionResult> Get(double x, double y)
+        public async Task<IHttpActionResult> Get(double x, double y, string streetAddress)
         {
             //TODO: check to ensure x and y are valid values
 
             var mapServerClient = new MapServerServiceClient(ConfigurationManager.AppSettings["CommonBoundariesApiUrl"]);
+            mapServerClient.MapServerApiUrl = ConfigurationManager.AppSettings["MapServerApiUrl"];
 
-            var result = await mapServerClient.Get(x, y);
+
+            //string quotedAddress = streetAddress.Insert(0, "'");
+
+
+            var result = await mapServerClient.Get(x, y, streetAddress);
 
             return Ok(result);
 
