@@ -16,6 +16,8 @@ namespace GeoData.Services
 
         public string MapServerApiUrl { get; set; }
 
+        public string CommonBoundariesApiUrlParameters { get; set; }
+
         public MapServerServiceClient(string commonBoundariesApiUrl)
         {
             _httpClient = new HttpClient();
@@ -26,7 +28,9 @@ namespace GeoData.Services
         public async Task<ReturnResult> Get(double x, double y, string streetAddress)
         {
             //this is the URL as it's currently in Election Admin
-            string parameters = $"?geometryType=esriGeometryPoint&geometry={x}%2C{y}&sr=102747&layers=all%3A0%2C1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%2C39&time=&layerTimeOptions=&layerdefs=&tolerance=1&mapExtent=11743500%2C3687943%2C11806063%2C3744740&imageDisplay=600%2C550%2C96&returnGeometry=false&maxAllowableOffset=&f=pjson";
+            //string parameters = $"?geometryType=esriGeometryPoint&geometry={x}%2C{y}&sr=102747&layers=all%3A0%2C1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%2C39&time=&layerTimeOptions=&layerdefs=&tolerance=1&mapExtent=11743500%2C3687943%2C11806063%2C3744740&imageDisplay=600%2C550%2C96&returnGeometry=false&maxAllowableOffset=&f=pjson";
+
+            string parameters = string.Format(CommonBoundariesApiUrlParameters, x, y);
 
             var request = new HttpRequestMessage(HttpMethod.Get, _httpClient.BaseAddress + parameters);
 
@@ -59,17 +63,7 @@ namespace GeoData.Services
 
                 var voterPrecinctLayer = serializedParcelLayers.results.FirstOrDefault(precinct => precinct.layerName == "Voter Precincts");
 
-                returnResult.VoterPrecinctNumber = voterPrecinctLayer.attributes.Name;
-
-
-                //string test = "\'900 E Broad St'";
-                //string test = "\'900 E Broad St'";
-
-                //make second call to get the Mailable field
-
-                //var mailableUrl = $"https://gisdev.richmondgov.com/arcgis/rest/services/StatePlane4502/Addresses/MapServer/0/query?where=AddressLabel={test}&outFields=*&returnGeometry=false&returnIdsOnly=false&f=json";
-
-                //streetAddress.SurroundWithSingleQuotes();
+                returnResult.VoterPrecinctNumber = voterPrecinctLayer.attributes.Name;                
 
                 string formattedAddress = string.Format("\'{0}\'", streetAddress);
 
@@ -87,7 +81,6 @@ namespace GeoData.Services
 
                 returnResult.Mailable = mailableRootObject.features.FirstOrDefault().attributes.Mailable;
 
-                //TODO; add BuildingNumber, UnitType, StreetDirection, StreetName, UnitValue, ZipCode
                 returnResult.BuildingNumber = mailableRootObject.features.FirstOrDefault().attributes.BuildingNumber;
 
                 returnResult.UnitType = mailableRootObject.features.FirstOrDefault().attributes.UnitType;
