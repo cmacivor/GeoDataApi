@@ -20,7 +20,6 @@ namespace GeoDataService.Controllers
                 return BadRequest();
             }
 
-            //TODO: send bad request if less than 2-3 characters
             if (street.Count() <= 5)
             {
                 return BadRequest();
