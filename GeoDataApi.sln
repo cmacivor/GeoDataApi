@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoDataService", "GeoDataService\GeoDataService.csproj", "{8FE61BC3-3EAE-42D2-9A63-6D5260FCF974}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoDataApi", "GeoDataService\GeoDataApi.csproj", "{8FE61BC3-3EAE-42D2-9A63-6D5260FCF974}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoData", "GeoData\GeoData.csproj", "{8E35A993-96BD-4393-8E1C-FEB7C0BDF509}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebDeploy", "WebDeploy", "{B63BE483-047F-449D-9B6A-A46F1CD4E104}"
+	ProjectSection(SolutionItems) = preProject
+		Publish-Package.ps1 = Publish-Package.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
