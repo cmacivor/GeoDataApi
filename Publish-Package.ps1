@@ -43,7 +43,7 @@ Restore-WDPackage $PackagePath -DestinationPublishSettings $publishSettings -Par
 	"MapServerApiUrl" = $deploymentParams.MapServerApiUrl
 	"ELMAHApplicationName" = $deploymentParams.ELMAHApplicationName
 	"ELMAHEmailSenderAlias" = $deploymentParams.ELMAHEmailSenderAlias
-	#"ELMAHEmailRecipients" = $deploymentParams.ELMAHEmailRecipients
+	"ELMAHEmailRecipients" = $deploymentParams.ELMAHEmailRecipients
 	#"ElmahEmailSubject" = $deploymentParams.ElmahEmailSubject
 }
 

@@ -17,7 +17,7 @@
   <parameter name="ELMAHEmailSenderAlias" description="Enter one of the following (matching the target environment): elmah@richmondgov.com, elmah_stage@richmondgov.com, or elmah_dev@richmondgov.com." defaultValue="__ElmahEmailSenderAlias__">
     <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/elmah/errorMail[@from='__ElmahEmailSenderAlias__']/@from" />
   </parameter>
-  <parameter name="ELMAH Email Recipients" description="Enter one or more semicolon-delimited email accounts or Outlook groups to receive ELMAH emails." defaultValue="__ElmahEmailRecipients__">
+  <parameter name="ELMAHEmailRecipients" description="Enter one or more semicolon-delimited email accounts or Outlook groups to receive ELMAH emails." defaultValue="__ElmahEmailRecipients__">
     <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/elmah/errorMail[@to='__ElmahEmailRecipients__']/@to" />
   </parameter>
 </parameters>
