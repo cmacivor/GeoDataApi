@@ -10,6 +10,9 @@ namespace GeoData.Services
 {
     public class AddressCandidatesServiceClient
     {
+        //making this static per guidance from these articles:
+        //https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
+        //https://stackoverflow.com/questions/40228146/httpclient-singleton-implementation-in-asp-net-mvc
         private static HttpClient _httpClient;
 
         public string AddressCandidatesApiUrl { get; set; }
