@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeoData.Mailable
+namespace GeoData.MapServerApiModel
 {
-    public class Feature
+    public class PacelLayers
     {
-        public Attributes attributes { get; set; }
+        public List<Result> results { get; set; }
     }
 }
