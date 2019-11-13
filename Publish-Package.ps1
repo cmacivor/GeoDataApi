@@ -44,7 +44,7 @@ Restore-WDPackage $PackagePath -DestinationPublishSettings $publishSettings -Par
 	"ELMAHApplicationName" = $deploymentParams.ELMAHApplicationName
 	"ELMAHEmailSenderAlias" = $deploymentParams.ELMAHEmailSenderAlias
 	"ELMAHEmailRecipients" = $deploymentParams.ELMAHEmailRecipients
-	#"ElmahEmailSubject" = $deploymentParams.ElmahEmailSubject
+	"ELMAHEmailSubject" = $deploymentParams.ELMAHEmailSubject
 }
 
 #passing parameters like this is necessary

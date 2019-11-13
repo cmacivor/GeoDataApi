@@ -20,4 +20,7 @@
   <parameter name="ELMAHEmailRecipients" description="Enter one or more semicolon-delimited email accounts or Outlook groups to receive ELMAH emails." defaultValue="__ElmahEmailRecipients__">
     <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/elmah/errorMail[@to='__ElmahEmailRecipients__']/@to" />
   </parameter>
+  <parameter name="ELMAHEmailSubject" description="Enter one or more semicolon-delimited email accounts or Outlook groups to receive ELMAH emails." defaultValue="__ElmahEmailSubject__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/elmah/errorMail[@subject='__ElmahEmailSubject__']/@subject" />
+  </parameter>
 </parameters>
