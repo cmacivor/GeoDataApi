@@ -21,6 +21,7 @@ namespace GeoDataService.Controllers
             }
 
             //TODO: what if the address were something like "3 Fry"?
+            //TODO: consider just returning an empty AddressCandidatesReturnResult instead of bad request
             if (street.Count() <= 5)
             {
                 return BadRequest();
