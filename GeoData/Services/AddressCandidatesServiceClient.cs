@@ -32,6 +32,14 @@ namespace GeoData.Services
 
             if (response.IsSuccessStatusCode)
             {
+                //TODO: need to handle this: 
+//                {
+//                "error": {
+//                    "code": 500,
+//  "message": "Error finding address candidates",
+//  "details": []
+//    }
+//}
                 var result = await response.Content.ReadAsStringAsync();
 
                 var serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<AddressCandidatesReturnResult>(result);

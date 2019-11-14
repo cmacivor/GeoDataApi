@@ -20,6 +20,7 @@ namespace GeoDataService.Controllers
                 return BadRequest();
             }
 
+            //TODO: what if the address were something like "3 Fry"?
             if (street.Count() <= 5)
             {
                 return BadRequest();

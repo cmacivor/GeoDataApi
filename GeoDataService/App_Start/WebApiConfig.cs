@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace GeoDataService
 {
@@ -14,6 +15,14 @@ namespace GeoDataService
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            //TODO: try this:https://stackoverflow.com/questions/3409598/need-net-code-to-execute-only-when-in-debug-configuration
+            //var cors = new EnableCorsAttribute("http://localhost:59823/", "*", "*");
+            var cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
+
+
+            //TODO: need to come up with a better policy for this
+            //TODO: remove unneeded nuget packages
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
             config.Routes.MapHttpRoute(
