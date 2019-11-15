@@ -20,7 +20,7 @@ namespace GeoData.Services
             SuggestApiUrl = suggestApiUrl;
         }
 
-        public async Task<SuggestionReturnResult> Get(string encodedStreet)
+        public async Task<SuggestionReturnResult> GetAsync(string encodedStreet)
         {
             string url = string.Format(SuggestApiUrl, encodedStreet);
 
@@ -28,6 +28,21 @@ namespace GeoData.Services
 
             var response = await _suggestServiceHttpClient.SendAsync(request);
 
+            if (!response.IsSuccessStatusCode)
+            {
+                return new SuggestionReturnResult { HttpResponseStatusCode = response.StatusCode };
+            }
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            var serialized = Newtonsoft.Json.JsonConvert.DeserializeObject<SuggestionReturnResult>(result);
+
+            serialized.HttpResponseStatusCode = response.StatusCode;
+
+            if (serialized != null)
+            {
+                return serialized;
+            }
 
             return null;
         }
