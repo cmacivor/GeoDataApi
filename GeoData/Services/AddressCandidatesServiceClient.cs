@@ -32,7 +32,7 @@ namespace GeoData.Services
 
             if (response.IsSuccessStatusCode)
             {
-                //TODO: need to handle this: 
+                //TODO: need to handle this, and for the others too: 
 //                {
 //                "error": {
 //                    "code": 500,

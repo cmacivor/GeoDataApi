@@ -144,6 +144,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AddressCandidatesController.cs" />
     <Compile Include="Controllers\MapServerController.cs" />
+    <Compile Include="Controllers\SuggestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
