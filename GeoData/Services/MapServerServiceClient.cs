@@ -52,6 +52,7 @@ namespace GeoData.Services
             //map the result to ReturnResult class for council district, etc
             var returnResult = MapVoterInformationToReturnResult(serializedParcelLayers);
 
+            //TODO: the streetAddress has to come from the StAddr returned from the AddressCandidatesController
             var mapServerResponse = await GetMapServerApiResponse(streetAddress);
 
             if (!mapServerResponse.IsSuccessStatusCode)
@@ -65,7 +66,7 @@ namespace GeoData.Services
 
             var serializedMapServerResponse = await mapServerResponse.Content.ReadAsStringAsync();
 
-            //TODO: need to check for null here
+            //TODO: need to check for null here. log the address if it's not found
             var mapServerAddresses = Newtonsoft.Json.JsonConvert.DeserializeObject<GeoData.MapServer.MapServerAddresses>(serializedMapServerResponse);        
 
             MapAddressInformationToReturnResult(returnResult, mapServerAddresses);
