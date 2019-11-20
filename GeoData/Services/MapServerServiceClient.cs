@@ -65,6 +65,7 @@ namespace GeoData.Services
 
             var serializedMapServerResponse = await mapServerResponse.Content.ReadAsStringAsync();
 
+            //TODO: need to check for null here
             var mapServerAddresses = Newtonsoft.Json.JsonConvert.DeserializeObject<GeoData.MapServer.MapServerAddresses>(serializedMapServerResponse);        
 
             MapAddressInformationToReturnResult(returnResult, mapServerAddresses);
