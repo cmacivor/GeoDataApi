@@ -41,6 +41,8 @@ namespace GeoData.LocationSummaryApiModel
 
         public string LandUse { get; set; }
 
+        public string OwnerName { get; set; }
+
         public HttpStatusCode HttpResponseStatusCode { get; set; }
 
         public string ErrorMessage { get; set; }

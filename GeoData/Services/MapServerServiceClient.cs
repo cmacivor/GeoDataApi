@@ -147,7 +147,8 @@ namespace GeoData.Services
 
                 ParcelID = parcelLayer.attributes.ParcelID,
                 PIN = parcelLayer.attributes.PIN,
-                LandUse =parcelLayer.attributes.LandUse
+                LandUse =parcelLayer.attributes.LandUse,
+                OwnerName =parcelLayer.attributes.OwnerName
             };
         }
     }
