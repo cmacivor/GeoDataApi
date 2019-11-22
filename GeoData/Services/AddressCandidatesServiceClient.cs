@@ -17,14 +17,24 @@ namespace GeoData.Services
 
         public string AddressCandidatesApiUrl { get; set; }
 
+        public string AddressCandidatesWithMagicKeyApiUrl { get; set; }
+
         public AddressCandidatesServiceClient()
         {
             _httpClient = new HttpClient();
         }
 
-        public async Task<AddressCandidatesReturnResult> GetAsync(string encodedStreet)
+        public async Task<AddressCandidatesReturnResult> GetAsync(string encodedStreet, string magicKey = "")
         {
-            string url = string.Format(AddressCandidatesApiUrl, encodedStreet);
+            string url = "";
+            if (string.IsNullOrEmpty(magicKey))
+            {
+                url = string.Format(AddressCandidatesApiUrl, encodedStreet);
+            }
+            else
+            {
+                url = string.Format(AddressCandidatesWithMagicKeyApiUrl, encodedStreet, magicKey);   
+            }
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -32,7 +42,7 @@ namespace GeoData.Services
 
             if (response.IsSuccessStatusCode)
             {
-                //TODO: need to handle this: 
+                //TODO: need to handle this, and for the others too: 
 //                {
 //                "error": {
 //                    "code": 500,

@@ -62,9 +62,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AddressCandidatesServiceClient.cs" />
     <Compile Include="Services\MapServerServiceClient.cs" />
+    <Compile Include="Services\SuggestAddressCandidatesServiceClient.cs" />
+    <Compile Include="Services\SuggestServiceClient.cs" />
+    <Compile Include="SuggestApiModel\Suggestion.cs" />
+    <Compile Include="SuggestApiModel\SuggestionReturnResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
