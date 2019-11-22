@@ -23,7 +23,7 @@ namespace GeoDataService.Controllers
 
             int minCharacterCount = Convert.ToInt32(ConfigurationManager.AppSettings["MinimumCharacterCount"]);
 
-            if (street.Count() <= 5)
+            if (street.Count() <= minCharacterCount)
             {
                 return Ok(new AddressCandidatesReturnResult());
             }
