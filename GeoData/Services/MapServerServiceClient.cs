@@ -54,7 +54,6 @@ namespace GeoData.Services
             //map the result to ReturnResult class for council district, etc
             var returnResult = MapVoterInformationToReturnResult(serializedParcelLayers);
 
-            //TODO: the streetAddress has to come from the StAddr returned from the AddressCandidatesController
             var mapServerResponse = await GetMapServerApiResponse(streetAddress);
 
             if (!mapServerResponse.IsSuccessStatusCode)
