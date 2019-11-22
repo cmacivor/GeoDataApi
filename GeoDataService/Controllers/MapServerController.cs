@@ -30,7 +30,6 @@ namespace GeoDataService.Controllers
 
         public async Task<IHttpActionResult> Get(double x, double y, string streetAddress)
         {
-            //TODO: check to ensure x and y are valid values
             if (string.IsNullOrEmpty(streetAddress))
             {
                 return BadRequest();

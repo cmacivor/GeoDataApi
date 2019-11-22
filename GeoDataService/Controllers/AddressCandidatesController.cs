@@ -1,4 +1,5 @@
-﻿using GeoData.Services;
+﻿using GeoData.AddressCandidates;
+using GeoData.Services;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -20,11 +21,11 @@ namespace GeoDataService.Controllers
                 return BadRequest();
             }
 
-            //TODO: what if the address were something like "3 Fry"? Maybe make this configurable?
-            //TODO: consider just returning an empty AddressCandidatesReturnResult instead of bad request. 
+            int minCharacterCount = Convert.ToInt32(ConfigurationManager.AppSettings["MinimumCharacterCount"]);
+
             if (street.Count() <= 5)
             {
-                return BadRequest();
+                return Ok(new AddressCandidatesReturnResult());
             }
 
             string encodedAddress = System.Web.HttpUtility.UrlEncode(street);
