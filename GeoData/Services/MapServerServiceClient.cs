@@ -23,6 +23,8 @@ namespace GeoData.Services
         private readonly string StateSenateDistricts = "State Senate Districts";
         private readonly string StateHouseDistricts = "State House Districts";
         private readonly string VoterPrecincts = "Voter Precincts";
+        private readonly string Parcel = "Parcel";
+        
 
 
         public MapServerServiceClient(string commonBoundariesApiUrl)
@@ -133,6 +135,8 @@ namespace GeoData.Services
 
         private  MapServerReturnResult MapVoterInformationToReturnResult(MapServerApiModel.PacelLayers serializedParcelLayers)
         {
+            var parcelLayer = serializedParcelLayers.results.FirstOrDefault(parcel => parcel.layerName == Parcel);
+
             return new MapServerReturnResult
             {
                 CouncilDistrict = serializedParcelLayers.results.FirstOrDefault(council => council.layerName == CouncilDistricts).attributes.Name,
@@ -141,9 +145,10 @@ namespace GeoData.Services
                 SenateDistrict = serializedParcelLayers.results.FirstOrDefault(senate => senate.layerName == StateSenateDistricts).attributes.Name,
                 VoterPrecinctNumber = serializedParcelLayers.results.FirstOrDefault(precinct => precinct.layerName == VoterPrecincts).attributes.Name,
 
+                ParcelID = parcelLayer.attributes.ParcelID,
+                PIN = parcelLayer.attributes.PIN,
+                LandUse =parcelLayer.attributes.LandUse
             };
         }
-
-
     }
 }
