@@ -14,20 +14,6 @@ namespace GeoDataService.Controllers
 {
     public class MapServerController : ApiController
     {
-        //private static HttpClient _httpClient;
-
-        //private static HttpClient _addressesHttpClient;
-
-        public MapServerController()
-        {
-            //string commonBoundariesApiUrl = ConfigurationManager.AppSettings["CommonBoundariesApiUrl"].ToString();
-
-            //_httpClient = new HttpClient();
-            //_addressesHttpClient = new HttpClient();
-            //_httpClient.BaseAddress = new Uri(commonBoundariesApiUrl);
-        }
-
-
         public async Task<IHttpActionResult> Get(double x, double y, string streetAddress)
         {
             if (string.IsNullOrEmpty(streetAddress))
