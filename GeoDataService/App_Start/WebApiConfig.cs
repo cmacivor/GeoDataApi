@@ -21,8 +21,7 @@ namespace GeoDataService
             config.EnableCors(cors);
 
 
-            //TODO: need to come up with a better policy for this
-            //TODO: remove unneeded nuget packages
+            //TODO: need to come up with a better policy for this    
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
             config.Routes.MapHttpRoute(
