@@ -21,7 +21,8 @@ namespace GeoDataService
             config.EnableCors(cors);
 
 
-            //TODO: need to come up with a better policy for this    
+            //see this for more info: https://lostechies.com/jimmybogard/2012/04/18/custom-errors-and-error-detail-policy-in-asp-net-web-api/
+            //since changing anything in DIT is so difficult, we won't make this configurable
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
             config.Routes.MapHttpRoute(
