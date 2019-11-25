@@ -41,20 +41,7 @@ namespace GeoDataService.Controllers
             }
 
             return Ok(result);
-
-            //var suggestUrl = ConfigurationManager.AppSettings["SuggestApiUrl"];
-            //var addressCandidatesMagicApiUrl = ConfigurationManager.AppSettings["AddressCandidatesWithMagicKeyApiUrl"];
-
-            //var serviceClient = new SuggestAddressCandidatesServiceClient(suggestUrl, addressCandidatesMagicApiUrl);
-
-            //var result = await serviceClient.GetAsync(encodedAddress);
-
-            //if (result == null)
-            //{       
-            //    return NotFound();
-            //}
-
-            // return Ok(result);
+            
         }
     }
 }
