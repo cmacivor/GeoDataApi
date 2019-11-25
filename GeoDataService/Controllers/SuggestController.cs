@@ -1,5 +1,6 @@
 ﻿using GeoData.AddressCandidates;
 using GeoData.Services;
+using GeoData.SuggestSubUnitApiModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,24 +25,24 @@ namespace GeoDataService.Controllers
 
             if (street.Count() <= minCharacterCount)
             {
-                return Ok(new AddressCandidatesReturnResult());
+                return Ok(new SuggestSubUnitReturnResult());
             }
 
             string encodedAddress = System.Web.HttpUtility.UrlEncode(street);
 
-            var suggestUrl = ConfigurationManager.AppSettings["SuggestApiUrl"];
-            var addressCandidatesMagicApiUrl = ConfigurationManager.AppSettings["AddressCandidatesWithMagicKeyApiUrl"];
+            var suggestUrl = ConfigurationManager.AppSettings["SuggestSubUnitApiUrl"];
 
-            var serviceClient = new SuggestAddressCandidatesServiceClient(suggestUrl, addressCandidatesMagicApiUrl);
+            var client = new SuggestSubUnitServiceClient(suggestUrl);
 
-            var result = await serviceClient.GetAsync(encodedAddress);
+            var result = await client.GetAsync(encodedAddress);
 
             if (result == null)
-            {       
+            {
                 return NotFound();
             }
 
-             return Ok(result);
+            return Ok(result);
+            
         }
     }
 }

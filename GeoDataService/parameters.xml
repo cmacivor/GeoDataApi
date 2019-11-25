@@ -1,4 +1,7 @@
 ﻿<parameters>
+  <parameter name="SuggestSubUnitApiUrl" defaultValue="__SuggestSubUnitApiUrl__" >
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='SuggestSubUnitApiUrl']/@value" />
+  </parameter>
   <parameter name="AddressCandidatesApiUrl" defaultValue="__AddressCandidatesApiUrl__" >
     <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='AddressCandidatesApiUrl']/@value" />
   </parameter>

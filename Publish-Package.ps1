@@ -38,6 +38,7 @@ Write-Output $deploymentParams
 
 Restore-WDPackage $PackagePath -DestinationPublishSettings $publishSettings -Parameters @{ 
 	"IIS Web Application Name"= $deploymentParams.IISWebApplicationName
+	"SuggestSubUnitApiUrl" = $deploymentParams.SuggestSubUnitApiUrl
 	"AddressCandidatesApiUrl" = $deploymentParams.AddressCandidatesApiUrl
 	"CommonBoundariesApiUrl" = $deploymentParams.CommonBoundariesApiUrl
 	"MapServerApiUrl" = $deploymentParams.MapServerApiUrl
