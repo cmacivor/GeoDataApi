@@ -1,5 +1,6 @@
 ﻿using GeoData.AddressCandidates;
 using GeoData.Services;
+using GeoData.SuggestSubUnitApiModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,7 +25,7 @@ namespace GeoDataService.Controllers
 
             if (street.Count() <= minCharacterCount)
             {
-                return Ok(new AddressCandidatesReturnResult());
+                return Ok(new SuggestSubUnitReturnResult());
             }
 
             string encodedAddress = System.Web.HttpUtility.UrlEncode(street);
