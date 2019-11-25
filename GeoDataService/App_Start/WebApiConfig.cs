@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Elmah.Contrib.WebApi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.ExceptionHandling;
 
 namespace GeoDataService
 {
@@ -14,6 +16,9 @@ namespace GeoDataService
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            //Elmah
+            config.Services.Add(typeof(IExceptionLogger), new ElmahExceptionLogger());
 
             //this API is hosted internally, so it should be ok to allow from any origin
             var cors = new EnableCorsAttribute("*", "*", "*");
