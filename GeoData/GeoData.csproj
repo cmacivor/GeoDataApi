@@ -64,8 +64,14 @@
     <Compile Include="Services\MapServerServiceClient.cs" />
     <Compile Include="Services\SuggestAddressCandidatesServiceClient.cs" />
     <Compile Include="Services\SuggestServiceClient.cs" />
+    <Compile Include="Services\SuggestSubUnitServiceClient.cs" />
     <Compile Include="SuggestApiModel\Suggestion.cs" />
     <Compile Include="SuggestApiModel\SuggestionReturnResult.cs" />
+    <Compile Include="SuggestSubUnitApiModel\Attributes.cs" />
+    <Compile Include="SuggestSubUnitApiModel\Candidate.cs" />
+    <Compile Include="SuggestSubUnitApiModel\Location.cs" />
+    <Compile Include="SuggestSubUnitApiModel\SpatialReference.cs" />
+    <Compile Include="SuggestSubUnitApiModel\SuggestSubUnitReturnResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
