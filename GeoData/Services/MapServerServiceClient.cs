@@ -39,7 +39,8 @@ namespace GeoData.Services
             var commonBoundariesApiResponse = await GetCommonBoundariesApiResponse(x, y);
 
             if (!commonBoundariesApiResponse.IsSuccessStatusCode)
-            {           
+            {   
+                //TODO: log address, include the URL called in the error message     
                 return new MapServerReturnResult
                 {
                     HttpResponseStatusCode = commonBoundariesApiResponse.StatusCode,
@@ -49,15 +50,17 @@ namespace GeoData.Services
 
             var result = await commonBoundariesApiResponse.Content.ReadAsStringAsync();
 
-            var serializedParcelLayers = Newtonsoft.Json.JsonConvert.DeserializeObject<GeoData.MapServerApiModel.PacelLayers>(result);
+            var serializedParcelLayers = Newtonsoft.Json.JsonConvert.DeserializeObject<MapServerApiModel.ParcelLayers>(result);
             
             //map the result to ReturnResult class for council district, etc
-            var returnResult = MapVoterInformationToReturnResult(serializedParcelLayers);
+            //TODO: check to make sure not null, has records, etc
+            var returnResult = MapVoterInformationToReturnResult(serializedParcelLayers, streetAddress);
 
             var mapServerResponse = await GetMapServerApiResponse(streetAddress);
 
             if (!mapServerResponse.IsSuccessStatusCode)
             {
+                //TODO: log address
                 return new MapServerReturnResult
                 {
                     HttpResponseStatusCode = mapServerResponse.StatusCode,
@@ -70,10 +73,22 @@ namespace GeoData.Services
             //TODO: need to check for null here. log the address if it's not found
             var mapServerAddresses = Newtonsoft.Json.JsonConvert.DeserializeObject<GeoData.MapServer.MapServerAddresses>(serializedMapServerResponse);        
 
+            if (mapServerAddresses == null || mapServerAddresses.features.Count == 0)
+            {
+                //TODO: log address
+                return new MapServerReturnResult
+                {
+                    HttpResponseStatusCode = System.Net.HttpStatusCode.NotFound,
+                    ErrorMessage = "The map server responded but returned no data."
+                };
+            }
+
+           
             MapAddressInformationToReturnResult(returnResult, mapServerAddresses);
 
             returnResult.HttpResponseStatusCode = System.Net.HttpStatusCode.OK;
-
+            
+    
             return returnResult;
         }
 
@@ -132,9 +147,11 @@ namespace GeoData.Services
             returnResult.AddressId = mapServerAddresses.features.FirstOrDefault().attributes.AddressId;
         }
 
-        private  MapServerReturnResult MapVoterInformationToReturnResult(MapServerApiModel.PacelLayers serializedParcelLayers)
+        private  MapServerReturnResult MapVoterInformationToReturnResult(MapServerApiModel.ParcelLayers serializedParcelLayers, string mailAddress)
         {
-            var parcelLayer = serializedParcelLayers.results.FirstOrDefault(parcel => parcel.layerName == Parcel);
+            //var parcelLayer = serializedParcelLayers.results.FirstOrDefault(parcel => parcel.layerName == Parcel);
+
+            var parcelLayer = serializedParcelLayers.results.FirstOrDefault(address => address.attributes.MailAddress == mailAddress);
 
             return new MapServerReturnResult
             {

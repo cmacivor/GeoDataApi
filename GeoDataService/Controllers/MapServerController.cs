@@ -27,6 +27,8 @@ namespace GeoDataService.Controllers
 
             mapServerClient.CommonBoundariesApiUrlParameters = ConfigurationManager.AppSettings["CommonBoundariesApiParameters"];
 
+            //string encodedAddress = System.Web.HttpUtility.UrlEncode(streetAddress);
+
             var result = await mapServerClient.Get(x, y, streetAddress);
 
             if (result == null)
