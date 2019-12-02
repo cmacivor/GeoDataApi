@@ -23,23 +23,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
 
             sql = @"";
 
-            if (searchString.IndexOf("West", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                directionSearchTerm = Regex.Replace(searchString, "West", "w", RegexOptions.IgnoreCase);
-            }
-            else if (searchString.IndexOf("East", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                directionSearchTerm = Regex.Replace(searchString, "East", "e", RegexOptions.IgnoreCase);
-            }
-            else if (searchString.IndexOf("South", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                directionSearchTerm = Regex.Replace(searchString, "South", "s", RegexOptions.IgnoreCase);
-            }
-            else if (searchString.IndexOf("South", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                directionSearchTerm = Regex.Replace(searchString, "West", "w", RegexOptions.IgnoreCase);
-            }
-
+            directionSearchTerm = HandleDirections(searchString, directionSearchTerm);
 
             if (!string.IsNullOrEmpty(directionSearchTerm))
             {
@@ -113,7 +97,29 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                     return rows;
                 }
             }
-       
+
+        }
+
+        private static string HandleDirections(string searchString, string directionSearchTerm)
+        {
+            if (searchString.IndexOf("West", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                directionSearchTerm = Regex.Replace(searchString, "West", "w", RegexOptions.IgnoreCase);
+            }
+            else if (searchString.IndexOf("East", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                directionSearchTerm = Regex.Replace(searchString, "East", "e", RegexOptions.IgnoreCase);
+            }
+            else if (searchString.IndexOf("South", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                directionSearchTerm = Regex.Replace(searchString, "South", "s", RegexOptions.IgnoreCase);
+            }
+            else if (searchString.IndexOf("South", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                directionSearchTerm = Regex.Replace(searchString, "West", "w", RegexOptions.IgnoreCase);
+            }
+
+            return directionSearchTerm;
         }
     }
 }
