@@ -114,9 +114,9 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
             {
                 directionSearchTerm = Regex.Replace(searchString, "South", "s", RegexOptions.IgnoreCase);
             }
-            else if (searchString.IndexOf("South", StringComparison.OrdinalIgnoreCase) >= 0)
+            else if (searchString.IndexOf("North", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                directionSearchTerm = Regex.Replace(searchString, "West", "w", RegexOptions.IgnoreCase);
+                directionSearchTerm = Regex.Replace(searchString, "North", "w", RegexOptions.IgnoreCase);
             }
 
             return directionSearchTerm;
