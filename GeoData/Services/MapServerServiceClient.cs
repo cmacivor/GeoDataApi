@@ -54,6 +54,17 @@ namespace GeoData.Services
             
             //map the result to ReturnResult class for council district, etc
             //TODO: check to make sure not null, has records, etc
+
+            if (serializedParcelLayers == null || serializedParcelLayers.results.Count() == 0)
+            {
+                //TODO: log address, include the URL called in the error message     
+                return new MapServerReturnResult
+                {
+                    HttpResponseStatusCode = commonBoundariesApiResponse.StatusCode,
+                    ErrorMessage = "The Common Boundaries API responded but no data returned."
+                };
+            }
+
             var returnResult = MapVoterInformationToReturnResult(serializedParcelLayers, streetAddress);
 
             var mapServerResponse = await GetMapServerApiResponse(streetAddress);
@@ -82,13 +93,11 @@ namespace GeoData.Services
                     ErrorMessage = "The map server responded but returned no data."
                 };
             }
-
-           
+     
             MapAddressInformationToReturnResult(returnResult, mapServerAddresses);
 
             returnResult.HttpResponseStatusCode = System.Net.HttpStatusCode.OK;
-            
-    
+                
             return returnResult;
         }
 
