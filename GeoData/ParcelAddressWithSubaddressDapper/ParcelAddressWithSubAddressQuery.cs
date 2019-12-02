@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using System.Text.RegularExpressions;
 
 namespace GeoData.ParcelAddressWithSubaddressDapper
 {
@@ -16,27 +17,33 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
         {
             string connString = ConfigurationManager.ConnectionStrings["GISConnectionString"].ToString();
 
-            //string sql = @"select top 10 
-            //                [AddressId],
-            //                [AddressLabel],
-            //                [BuildingNumber],
-            //                [StreetDirection],
-            //                [StreetName],
-            //                [StreetType],
-            //                [ExtensionWithUnit],
-            //                [UnitType],
-            //                [UnitValue],
-            //                [ZipCode],
-            //                [Mailable],
-            //                [StatePlaneX],
-            //                [StatePlaneY],
-            //                [CouncilDistrict]
-            //                from [gp].[GEODATAAPIADDRESSES]";
+            string sql = string.Empty;
+
+            string directionSearchTerm = string.Empty;
+
+            sql = @"";
+
+            if (searchString.IndexOf("West", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                directionSearchTerm = Regex.Replace(searchString, "West", "w", RegexOptions.IgnoreCase);
+            }
+            else if (searchString.IndexOf("East", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                directionSearchTerm = Regex.Replace(searchString, "East", "e", RegexOptions.IgnoreCase);
+            }
+            else if (searchString.IndexOf("South", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                directionSearchTerm = Regex.Replace(searchString, "South", "s", RegexOptions.IgnoreCase);
+            }
+            else if (searchString.IndexOf("South", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                directionSearchTerm = Regex.Replace(searchString, "West", "w", RegexOptions.IgnoreCase);
+            }
 
 
-
-
-            string sql = @"select 
+            if (!string.IsNullOrEmpty(directionSearchTerm))
+            {
+                sql = @"select top 10 
                         [AddressId],
                         [AddressLabel],
                         [BuildingNumber],
@@ -51,16 +58,62 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                         [StatePlaneX],
                         [StatePlaneY],
                         [CouncilDistrict]
-                        from [gp].[GEODATAAPIADDRESSES]
-                        where AddressLabel LIKE CONCAT (@searchValue, '%');";
+                        from [gp].[addr_GeodataAPIAddresses]
+                        where AddressLabel like @directionSearchValue
+                        UNION ALL
+                        select top 10 
+                        [AddressId],
+                        [AddressLabel],
+                        [BuildingNumber],
+                        [StreetDirection],
+                        [StreetName],
+                        [StreetType],
+                        [ExtensionWithUnit],
+                        [UnitType],
+                        [UnitValue],
+                        [ZipCode],
+                        [Mailable],
+                        [StatePlaneX],
+                        [StatePlaneY],
+                        [CouncilDistrict]
+                        from [gp].[addr_GeodataAPIAddresses]
+                        where AddressLabel LIKE @searchValue";
 
+                using (var connection = new SqlConnection(connString))
+                {
+                    var rows = connection.Query<ParcelAddressWithSubAddressModel>(sql, new { searchValue = searchString + "%", directionSearchValue = directionSearchTerm + "%" }).ToList();
 
-            using (var connection = new SqlConnection(connString))
-            {
-                var rows = connection.Query<ParcelAddressWithSubAddressModel>(sql, new { searchValue = searchString }).ToList();
-
-                return rows;
+                    return rows;
+                }
             }
+            else
+            {
+                sql = @"select 
+                        [AddressId],
+                        [AddressLabel],
+                        [BuildingNumber],
+                        [StreetDirection],
+                        [StreetName],
+                        [StreetType],
+                        [ExtensionWithUnit],
+                        [UnitType],
+                        [UnitValue],
+                        [ZipCode],
+                        [Mailable],
+                        [StatePlaneX],
+                        [StatePlaneY],
+                        [CouncilDistrict]
+                        from [gp].[addr_GeodataAPIAddresses]
+                        where AddressLabel LIKE @searchValue;";
+
+                using (var connection = new SqlConnection(connString))
+                {
+                    var rows = connection.Query<ParcelAddressWithSubAddressModel>(sql, new { searchValue = searchString + "%" }).ToList();
+
+                    return rows;
+                }
+            }
+       
         }
     }
 }
