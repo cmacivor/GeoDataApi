@@ -13,7 +13,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
 {
     public class ParcelAddressWithSubAddressQuery
     {
-        public  List<ParcelAddressWithSubAddressModel> Get(string searchString)
+        public async Task<List<ParcelAddressWithSubAddressModel>> Get(string searchString)
         {
             string connString = ConfigurationManager.ConnectionStrings["GISConnectionString"].ToString();
 
@@ -65,9 +65,9 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
 
                 using (var connection = new SqlConnection(connString))
                 {
-                    var rows = connection.Query<ParcelAddressWithSubAddressModel>(sql, new { searchValue = searchString + "%", directionSearchValue = directionSearchTerm + "%" }).ToList();
+                    var rows = await connection.QueryAsync<ParcelAddressWithSubAddressModel>(sql, new { searchValue = searchString + "%", directionSearchValue = directionSearchTerm + "%" });
 
-                    return rows;
+                    return rows.ToList();
                 }
             }
             else
@@ -92,15 +92,15 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
 
                 using (var connection = new SqlConnection(connString))
                 {
-                    var rows = connection.Query<ParcelAddressWithSubAddressModel>(sql, new { searchValue = searchString + "%" }).ToList();
+                    var rows = await connection.QueryAsync<ParcelAddressWithSubAddressModel>(sql, new { searchValue = searchString + "%" });
 
-                    return rows;
+                    return rows.ToList();
                 }
             }
 
         }
 
-        private static string HandleDirections(string searchString, string directionSearchTerm)
+        private string HandleDirections(string searchString, string directionSearchTerm)
         {
             if (searchString.IndexOf("West", StringComparison.OrdinalIgnoreCase) >= 0)
             {
