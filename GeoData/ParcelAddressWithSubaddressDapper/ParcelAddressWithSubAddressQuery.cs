@@ -12,27 +12,9 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
 {
     public class ParcelAddressWithSubAddressQuery
     {
-        public async Task<List<ParcelAddressWithSubAddressModel>> Get(string searchString)
+        public  List<ParcelAddressWithSubAddressModel> Get(string searchString)
         {
             string connString = ConfigurationManager.ConnectionStrings["GISConnectionString"].ToString();
-
-            string sql = @"select top 10 
-                            [AddressId],
-                            [AddressLabel],
-                            [BuildingNumber],
-                            [StreetDirection],
-                            [StreetName],
-                            [StreetType],
-                            [ExtensionWithUnit],
-                            [UnitType],
-                            [UnitValue],
-                            [ZipCode],
-                            [Mailable],
-                            [StatePlaneX],
-                            [StatePlaneY],
-                            [CouncilDistrict]
-                            from [gp].[GEODATAAPIADDRESSES]";
-
 
             //string sql = @"select top 10 
             //                [AddressId],
@@ -49,15 +31,35 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
             //                [StatePlaneX],
             //                [StatePlaneY],
             //                [CouncilDistrict]
-            //                from [gp].[GEODATAAPIADDRESSES]
-            //                where AddressLabel like @searchValue + '%'";
-                  
+            //                from [gp].[GEODATAAPIADDRESSES]";
+
+
+
+
+            string sql = @"select 
+                        [AddressId],
+                        [AddressLabel],
+                        [BuildingNumber],
+                        [StreetDirection],
+                        [StreetName],
+                        [StreetType],
+                        [ExtensionWithUnit],
+                        [UnitType],
+                        [UnitValue],
+                        [ZipCode],
+                        [Mailable],
+                        [StatePlaneX],
+                        [StatePlaneY],
+                        [CouncilDistrict]
+                        from [gp].[GEODATAAPIADDRESSES]
+                        where AddressLabel LIKE CONCAT (@searchValue, '%');";
+
 
             using (var connection = new SqlConnection(connString))
             {
-                var rows = await connection.QueryAsync<ParcelAddressWithSubAddressModel>(sql, new { searchValue = searchString });
+                var rows = connection.Query<ParcelAddressWithSubAddressModel>(sql, new { searchValue = searchString }).ToList();
 
-                return rows.ToList();
+                return rows;
             }
         }
     }

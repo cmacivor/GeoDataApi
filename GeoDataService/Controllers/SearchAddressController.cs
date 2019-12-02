@@ -15,7 +15,7 @@ namespace GeoDataService.Controllers
         {
             var query = new ParcelAddressWithSubAddressQuery();
 
-            var result = await query.Get(searchString);
+            var result = query.Get(searchString);
 
             return Ok(result);
         }
