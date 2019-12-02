@@ -38,5 +38,9 @@ namespace GeoData.AddressCandidates
         public string Xmax { get; set; }
         public string Ymin { get; set; }
         public string Ymax { get; set; }
+
+        public string Ref_ID { get; set; }
+
+        public string CouncilDistrict { get; set; }
     }
 }
