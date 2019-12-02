@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeoData.ParcelAddressWithSubaddressDapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,9 +13,11 @@ namespace GeoDataService.Controllers
     {
         public async Task<IHttpActionResult> Get(string searchString)
         {
+            var query = new ParcelAddressWithSubAddressQuery();
 
+            var result = await query.Get(searchString);
 
-            return null;
+            return Ok(result);
         }
 
     }
