@@ -158,9 +158,7 @@ namespace GeoData.Services
 
         private  MapServerReturnResult MapVoterInformationToReturnResult(MapServerApiModel.ParcelLayers serializedParcelLayers, string mailAddress)
         {
-            //var parcelLayer = serializedParcelLayers.results.FirstOrDefault(parcel => parcel.layerName == Parcel);
-
-            var parcelLayer = serializedParcelLayers.results.FirstOrDefault(address => address.attributes.MailAddress == mailAddress);
+            var parcelLayer = serializedParcelLayers.results.FirstOrDefault(parcel => parcel.layerName == Parcel);
 
             return new MapServerReturnResult
             {
