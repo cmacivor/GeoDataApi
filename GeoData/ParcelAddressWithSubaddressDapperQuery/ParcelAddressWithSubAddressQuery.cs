@@ -34,7 +34,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                         [StreetDirection],
                         [StreetName],
                         [StreetType],
-                        [ExtensionWithUnit],
+                        [Extension],
                         [UnitType],
                         [UnitValue],
                         [ZipCode],
@@ -42,7 +42,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                         [StatePlaneX],
                         [StatePlaneY],
                         [CouncilDistrict]
-                        from [gp].[addr_GeodataAPIAddresses]
+                        from [gp].[addr_GeodataAPIView]
                         where AddressLabel like @directionSearchValue
                         UNION ALL
                         select top 10 
@@ -52,7 +52,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                         [StreetDirection],
                         [StreetName],
                         [StreetType],
-                        [ExtensionWithUnit],
+                        [Extension],
                         [UnitType],
                         [UnitValue],
                         [ZipCode],
@@ -60,7 +60,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                         [StatePlaneX],
                         [StatePlaneY],
                         [CouncilDistrict]
-                        from [gp].[addr_GeodataAPIAddresses]
+                        from [gp].[addr_GeodataAPIView]
                         where AddressLabel LIKE @searchValue";
 
                 using (var connection = new SqlConnection(connString))
@@ -79,7 +79,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                         [StreetDirection],
                         [StreetName],
                         [StreetType],
-                        [ExtensionWithUnit],
+                        [Extension],
                         [UnitType],
                         [UnitValue],
                         [ZipCode],
@@ -87,7 +87,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                         [StatePlaneX],
                         [StatePlaneY],
                         [CouncilDistrict]
-                        from [gp].[addr_GeodataAPIAddresses]
+                        from [gp].[addr_GeodataAPIView]
                         where AddressLabel LIKE @searchValue;";
 
                 using (var connection = new SqlConnection(connString))
