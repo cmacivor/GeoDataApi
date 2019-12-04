@@ -29,6 +29,8 @@ namespace GeoDataService.Controllers
 
             //string encodedAddress = System.Web.HttpUtility.UrlEncode(streetAddress);
 
+
+
             var result = await mapServerClient.Get(x, y, streetAddress);
 
             if (result == null)
@@ -45,5 +47,7 @@ namespace GeoDataService.Controllers
 
             return Ok(result);
         }
+
+
     }
 }
