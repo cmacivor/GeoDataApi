@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using GeoData.LocationSummaryApiModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,7 +13,7 @@ namespace GeoData.GeoDataApiViewDapperQuery
 {
     public class GeoDataApiViewQuery
     {
-        public async Task<List<GeoDataApiViewQueryResult>> Get(string searchString)
+        public async Task<MapServerReturnResult> Get(string searchString)
         {
             string connString = ConfigurationManager.ConnectionStrings["GISConnectionString"].ToString();
                                
@@ -44,11 +45,10 @@ namespace GeoData.GeoDataApiViewDapperQuery
 
                 using (var connection = new SqlConnection(connString))
                 {
-                    var rows = await connection.QueryAsync<GeoDataApiViewQueryResult>(sql, new { searchValue = searchString });
+                    var result = await connection.QueryAsync<MapServerReturnResult>(sql, new { searchValue = searchString });
 
-                    return rows.ToList();
-                }
-         
+                    return result.FirstOrDefault();
+                }         
             }
         }
 }
