@@ -27,7 +27,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
 
             if (!string.IsNullOrEmpty(directionSearchTerm))
             {
-                sql = @"select top 10 
+                sql = @"select distinct
                         [AddressId],
                         [AddressLabel],
                         [BuildingNumber],
@@ -45,7 +45,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                         from [gp].[addr_GeodataAPIView]
                         where AddressLabel like @directionSearchValue
                         UNION ALL
-                        select top 10 
+                        select distinct 
                         [AddressId],
                         [AddressLabel],
                         [BuildingNumber],
@@ -72,7 +72,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
             }
             else
             {
-                sql = @"select 
+                sql = @"select distinct 
                         [AddressId],
                         [AddressLabel],
                         [BuildingNumber],
