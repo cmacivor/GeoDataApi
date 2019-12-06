@@ -1,6 +1,6 @@
 ﻿using GeoData.AddressCandidates;
 using GeoData.ParcelAddressWithSubaddressDapper;
-using GeoData.SuggestSubUnitApiModel;
+
 using System;
 using System.Collections.Generic;
 using System.Configuration;

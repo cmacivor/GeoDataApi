@@ -70,16 +70,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceClients\AddressCandidatesServiceClient.cs" />
     <Compile Include="ServiceClients\MapServerServiceClient.cs" />
-    <Compile Include="ServiceClients\SuggestAddressCandidatesServiceClient.cs" />
     <Compile Include="ServiceClients\SuggestServiceClient.cs" />
-    <Compile Include="ServiceClients\SuggestSubUnitServiceClient.cs" />
     <Compile Include="SuggestApiModel\Suggestion.cs" />
     <Compile Include="SuggestApiModel\SuggestionReturnResult.cs" />
-    <Compile Include="SuggestSubUnitApiModel\Attributes.cs" />
-    <Compile Include="SuggestSubUnitApiModel\Candidate.cs" />
-    <Compile Include="SuggestSubUnitApiModel\Location.cs" />
-    <Compile Include="SuggestSubUnitApiModel\SpatialReference.cs" />
-    <Compile Include="SuggestSubUnitApiModel\SuggestSubUnitReturnResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
