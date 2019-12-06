@@ -19,14 +19,18 @@ Summary of the APIs currently in the solution:
 AddressCandidates:
 The AddressCandidates API is simply a wrapper around the findAddressCandidates GIS locator service. It is consumed by the following 
 applications:
+VoterRegistration
+ElectionAdministration
+SuperCanInventory
 
 MapServer:
 The MapServer API accepts the x and y coordinates returned by the AddressCandidates service in the location object. The StAddr property
 returned by AddressCandidates is what is passed to the streetAddress parameter of MapServer. MapServer is consumed by the following 
 applications:
+VoterRegistration
 
 
 SearchAddress:
 SearchAddress is meant to be consumed by applications with autocomplete/type-ahead features. The Empower suite of applications consumes
 this API. 
-
+VoterRegistration
