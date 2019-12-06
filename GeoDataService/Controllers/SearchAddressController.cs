@@ -15,7 +15,7 @@ namespace GeoDataService.Controllers
     public class SearchAddressController : ApiController
     {
         public async Task<IHttpActionResult> Get(string street)
-        {
+        {            
             if (string.IsNullOrEmpty(street))
             {
                 return BadRequest();

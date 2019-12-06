@@ -27,14 +27,14 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
 
             if (!string.IsNullOrEmpty(directionSearchTerm))
             {
-                sql = @"select top 10 
+                sql = @"select distinct
                         [AddressId],
                         [AddressLabel],
                         [BuildingNumber],
                         [StreetDirection],
                         [StreetName],
                         [StreetType],
-                        [ExtensionWithUnit],
+                        [Extension],
                         [UnitType],
                         [UnitValue],
                         [ZipCode],
@@ -42,17 +42,17 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                         [StatePlaneX],
                         [StatePlaneY],
                         [CouncilDistrict]
-                        from [gp].[addr_GeodataAPIAddresses]
+                        from [gp].[addr_GeodataAPIView]
                         where AddressLabel like @directionSearchValue
                         UNION ALL
-                        select top 10 
+                        select distinct 
                         [AddressId],
                         [AddressLabel],
                         [BuildingNumber],
                         [StreetDirection],
                         [StreetName],
                         [StreetType],
-                        [ExtensionWithUnit],
+                        [Extension],
                         [UnitType],
                         [UnitValue],
                         [ZipCode],
@@ -60,7 +60,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                         [StatePlaneX],
                         [StatePlaneY],
                         [CouncilDistrict]
-                        from [gp].[addr_GeodataAPIAddresses]
+                        from [gp].[addr_GeodataAPIView]
                         where AddressLabel LIKE @searchValue";
 
                 using (var connection = new SqlConnection(connString))
@@ -72,14 +72,14 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
             }
             else
             {
-                sql = @"select 
+                sql = @"select distinct 
                         [AddressId],
                         [AddressLabel],
                         [BuildingNumber],
                         [StreetDirection],
                         [StreetName],
                         [StreetType],
-                        [ExtensionWithUnit],
+                        [Extension],
                         [UnitType],
                         [UnitValue],
                         [ZipCode],
@@ -87,7 +87,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
                         [StatePlaneX],
                         [StatePlaneY],
                         [CouncilDistrict]
-                        from [gp].[addr_GeodataAPIAddresses]
+                        from [gp].[addr_GeodataAPIView]
                         where AddressLabel LIKE @searchValue;";
 
                 using (var connection = new SqlConnection(connString))

@@ -20,7 +20,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapperModel
 
         public string StreetType { get; set; }
 
-        public string ExtensionWithUnit { get; set; }
+        public string Extension { get; set; }
 
         public string UnitType { get; set; }
 
