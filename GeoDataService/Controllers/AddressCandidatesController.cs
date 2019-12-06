@@ -15,6 +15,7 @@ namespace GeoDataService.Controllers
   
     public class AddressCandidatesController : ApiController
     {
+        [HttpGet]
         public async Task<IHttpActionResult> Get(string street)
         {
             if (string.IsNullOrEmpty(street))
