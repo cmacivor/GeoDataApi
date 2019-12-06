@@ -1,5 +1,6 @@
 ﻿using GeoData.AddressCandidates;
 using GeoData.Services;
+using Polly;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +16,7 @@ namespace GeoDataService.Controllers
     public class AddressCandidatesController : ApiController
     {
         public async Task<IHttpActionResult> Get(string street)
-        {      
+        {
             if (string.IsNullOrEmpty(street))
             {
                 return BadRequest();
@@ -29,13 +30,26 @@ namespace GeoDataService.Controllers
             }
 
             string encodedAddress = System.Web.HttpUtility.UrlEncode(street);
-            
+
             var service = new AddressCandidatesServiceClient();
 
             service.AddressCandidatesApiUrl = ConfigurationManager.AppSettings["AddressCandidatesApiUrl"];
 
-            var results = await service.GetAsync(encodedAddress);
+            HttpStatusCode[] httpStatusCodesWorthRetrying = {
+               HttpStatusCode.RequestTimeout, // 408
+               HttpStatusCode.InternalServerError, // 500
+               HttpStatusCode.BadGateway, // 502
+               HttpStatusCode.ServiceUnavailable, // 503
+               HttpStatusCode.GatewayTimeout // 504
+            };
 
+            var retryPolicy = Policy
+                .HandleResult<AddressCandidatesReturnResult>(r => httpStatusCodesWorthRetrying.Contains(r.HttpResponseStatusCode))
+                .OrResult(r => r == null)
+                .RetryAsync(3);
+
+            var results = await retryPolicy.ExecuteAsync(async () => await GetResultFromFindAddressCandidates(encodedAddress, service));
+           
             if (results == null)
             {
                 //TODO: log the address that causes this
@@ -46,8 +60,13 @@ namespace GeoDataService.Controllers
             {
                 throw new HttpResponseException(results.HttpResponseStatusCode);
             }
-        
-            return Ok(results);            
+
+            return Ok(results);
+        }
+
+        private static async Task<AddressCandidatesReturnResult> GetResultFromFindAddressCandidates(string encodedAddress, AddressCandidatesServiceClient service)
+        {
+            return await service.GetAsync(encodedAddress);
         }
     }
 }
