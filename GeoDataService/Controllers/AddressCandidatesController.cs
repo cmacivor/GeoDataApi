@@ -65,7 +65,7 @@ namespace GeoDataService.Controllers
             return Ok(results);
         }
 
-        private static async Task<AddressCandidatesReturnResult> GetResultFromFindAddressCandidates(string encodedAddress, AddressCandidatesServiceClient service)
+        private async Task<AddressCandidatesReturnResult> GetResultFromFindAddressCandidates(string encodedAddress, AddressCandidatesServiceClient service)
         {
             return await service.GetAsync(encodedAddress);
         }
