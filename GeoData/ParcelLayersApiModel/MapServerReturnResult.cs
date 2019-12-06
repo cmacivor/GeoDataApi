@@ -10,7 +10,6 @@ namespace GeoData.LocationSummaryApiModel
     public class MapServerReturnResult
     {
         public string CouncilDistrict { get; set; }
-
         public string CongressionalDistrict { get; set; }
 
         public string HouseDistrict { get; set; }
