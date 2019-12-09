@@ -1,6 +1,6 @@
 ﻿using GeoData.AddressCandidates;
 using GeoData.ParcelAddressWithSubaddressDapper;
-using GeoData.SuggestSubUnitApiModel;
+
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,6 +14,7 @@ namespace GeoDataService.Controllers
 {
     public class SearchAddressController : ApiController
     {
+        [HttpGet]
         public async Task<IHttpActionResult> Get(string street)
         {            
             if (string.IsNullOrEmpty(street))
