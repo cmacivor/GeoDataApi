@@ -42,5 +42,29 @@ namespace GeoData.AddressCandidates
         public string Ref_ID { get; set; }
 
         public string CouncilDistrict { get; set; }
+
+        private string addressLabel;
+
+        public string AddressLabel
+        {
+            //get;
+            get
+            {
+
+                addressLabel = StAddr;
+
+                if (!string.IsNullOrEmpty(SubAddType))
+                {
+                    addressLabel = addressLabel + " " + SubAddType;
+                }
+                if (!string.IsNullOrEmpty(SubAddUnit))
+                {
+                    addressLabel = addressLabel + " " + SubAddUnit;
+                }
+
+                return addressLabel;
+            }
+        }
+
     }
 }

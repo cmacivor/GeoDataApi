@@ -62,6 +62,8 @@ namespace GeoDataService.Controllers
                 throw new HttpResponseException(results.HttpResponseStatusCode);
             }
 
+            //results.candidates.FirstOrDefault().attributes.StAddr = results.candidates.FirstOrDefault().attributes.AddressLabel;
+
             return Ok(results);
         }
 
