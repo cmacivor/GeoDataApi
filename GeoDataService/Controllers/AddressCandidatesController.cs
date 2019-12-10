@@ -50,19 +50,21 @@ namespace GeoDataService.Controllers
                 .RetryAsync(3);
 
             var results = await retryPolicy.ExecuteAsync(async () => await GetResultFromFindAddressCandidates(encodedAddress, service));
-           
-            if (results == null)
-            {
-                //TODO: log the address that causes this
-                return NotFound();
-            }
 
             if (results.HttpResponseStatusCode != HttpStatusCode.OK)
             {
                 throw new HttpResponseException(results.HttpResponseStatusCode);
             }
 
-            //results.candidates.FirstOrDefault().attributes.StAddr = results.candidates.FirstOrDefault().attributes.AddressLabel;
+            if (results == null)
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.NotFound)
+                {
+                    Content = new StringContent(string.Format("No record found for {0}", street)),
+                    ReasonPhrase = "Address Not Found"
+                };
+                throw new HttpResponseException(response);
+            }
 
             return Ok(results);
         }

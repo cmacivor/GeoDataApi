@@ -47,7 +47,6 @@ namespace GeoData.AddressCandidates
 
         public string AddressLabel
         {
-            //get;
             get
             {
 
