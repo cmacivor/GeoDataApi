@@ -5,6 +5,9 @@
   <parameter name="AddressCandidatesApiUrl" defaultValue="__AddressCandidatesApiUrl__" >
     <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='AddressCandidatesApiUrl']/@value" />
   </parameter>
+  <parameter name="MinimumCharacterCount" defaultValue="__MinimumCharacterCount__" >
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='MinimumCharacterCount']/@value" />
+  </parameter>
   <parameter name="ELMAHDBConnString" description="Enter a SqlClient connection string for the ELMAH database" defaultValue="__ElmahSqlConnectionString__">
     <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/connectionStrings/add[@name='__ElmahSqlConnectionString__']/@connectionString" />
   </parameter>
