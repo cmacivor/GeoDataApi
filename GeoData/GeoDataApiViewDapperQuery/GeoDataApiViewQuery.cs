@@ -15,7 +15,7 @@ namespace GeoData.GeoDataApiViewDapperQuery
     {
         public async Task<MapServerReturnResult> Get(string searchString)
         {
-            string connString = ConfigurationManager.ConnectionStrings["GISConnectionString"].ToString();
+            string connString = ConfigurationManager.ConnectionStrings["GisSql"].ToString();
                                
             string sql = @"SELECT 
                         [AddressID]

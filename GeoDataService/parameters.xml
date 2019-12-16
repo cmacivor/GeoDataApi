@@ -1,9 +1,12 @@
 ﻿<parameters>
+  <parameter name="GisSql" description="Enter a SqlClient connection string for the GIS database." defaultValue="__GISConnectionString__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/connectionStrings/add[@name='GisSql']/@connectionString" />
+  </parameter>
   <parameter name="AddressCandidatesApiUrl" defaultValue="__AddressCandidatesApiUrl__" >
     <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/appSettings/add[@key='AddressCandidatesApiUrl']/@value" />
   </parameter>
-  <parameter name="ELMAH SQL Connection String" description="Enter a SqlClient connection string for the GIS ELMAH database (typically using the elmahlogger account)." defaultValue="__ElmahSqlConnectionString__">
-    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/connectionStrings/add[@name='ELMAH']/@connectionString" />
+  <parameter name="ELMAHDBConnString" description="Enter a SqlClient connection string for the ELMAH database" defaultValue="__ElmahSqlConnectionString__">
+    <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/connectionStrings/add[@name='__ElmahSqlConnectionString__']/@connectionString" />
   </parameter>
   <parameter name="ELMAHApplicationName" description="Enter one of the following (matching the target environment): GIS Geodata API, GIS Geodata API (starappstage2), or GIS Geodata API (starappdev2)." defaultValue="__ElmahApplicationName__">
     <parameterEntry kind="XmlFile" scope="\\Web\.config$" match="/configuration/elmah/errorLog[@applicationName='__ElmahApplicationName__']/@applicationName" />

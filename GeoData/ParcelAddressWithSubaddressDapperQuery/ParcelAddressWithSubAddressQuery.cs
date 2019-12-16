@@ -15,7 +15,7 @@ namespace GeoData.ParcelAddressWithSubaddressDapper
     {
         public async Task<List<ParcelAddressWithSubAddressModel>> Get(string searchString)
         {
-            string connString = ConfigurationManager.ConnectionStrings["GISConnectionString"].ToString();
+            string connString = ConfigurationManager.ConnectionStrings["GisSql"].ToString();
 
             string sql = string.Empty;
 
