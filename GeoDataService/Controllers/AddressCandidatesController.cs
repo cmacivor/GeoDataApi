@@ -51,11 +51,6 @@ namespace GeoDataService.Controllers
 
             var results = await retryPolicy.ExecuteAsync(async () => await GetResultFromFindAddressCandidates(encodedAddress, service));
 
-            if (results.HttpResponseStatusCode != HttpStatusCode.OK)
-            {
-                throw new HttpResponseException(results.HttpResponseStatusCode);
-            }
-
             if (results == null)
             {
                 var response = new HttpResponseMessage(HttpStatusCode.NotFound)
@@ -64,6 +59,11 @@ namespace GeoDataService.Controllers
                     ReasonPhrase = "Address Not Found"
                 };
                 throw new HttpResponseException(response);
+            }
+
+            if (results.HttpResponseStatusCode != HttpStatusCode.OK)
+            {
+                throw new HttpResponseException(results.HttpResponseStatusCode);
             }
 
             return Ok(results);
